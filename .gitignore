@@ -1,0 +1,49 @@
+# --- Environnements virtuels ---
+ENV/
+env/
+venv/
+.venv/
+
+# --- Python / Bytecode ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Logs & caches ---
+*.log
+.pytest_cache/
+.mypy_cache/
+ruff_cache/
+.pyre/
+.pytype/
+.coverage
+htmlcov/
+
+# --- Django ---
+# Base de données SQLite en dev
+db.sqlite3*
+# Fichiers collectés par collectstatic (si tu utilises STATIC_ROOT=.../staticfiles)
+staticfiles/
+# Fichiers médias uploadés (si non versionnés)
+media/
+
+# --- Packaging / build ---
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# --- Configs locales ---
+.local/
+.env
+.env.*
+*.env
+local_settings.py
+
+# --- IDE / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini

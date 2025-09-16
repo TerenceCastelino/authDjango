@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Accueil{% endblock %}
+{% block content %}
+<div class="card">
+<h1>Bienvenue 👋</h1>
+{% if user.is_authenticated %}
+<p>Connecté en tant que <strong>{{ user.username }}</strong>.</p>
+{% else %}
+<p>Vous n'êtes pas connecté.</p>
+{% endif %}
+</div>
+{% endblock %}

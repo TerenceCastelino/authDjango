@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Connexion{% endblock %}
+{% block content %}
+<div class="card">
+<h1>Connexion</h1>
+<form method="post">
+{% csrf_token %}
+{{ form.as_p }}
+<button type="submit">Se connecter</button>
+</form>
+<p style="margin-top:8px">
+<a href="{% url 'password_reset' %}">Mot de passe oublié ?</a>
+</p>
+</div>
+{% endblock %}

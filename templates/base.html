@@ -1,0 +1,62 @@
+{% load static %} {# Charge le tag 'static' si tu veux lier CSS/JS/images du dossier static/ #}
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Site{% endblock %}</title>
+
+  {# Styles minimalistes pour la démo (tu peux migrer ça vers un fichier static plus tard) #}
+  <style>
+    body{font-family:system-ui;margin:0;background:#f7f7fb;color:#222}
+    header,main{max-width:900px;margin:auto;padding:16px}
+    nav a{margin-right:12px}
+    .card{background:#fff;padding:16px;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,.06)}
+    form p{display:flex;flex-direction:column;margin:8px 0}
+    input,button{padding:10px;border-radius:8px;border:1px solid #ddd}
+    button{cursor:pointer}
+  </style>
+
+  {# Slot pour ajouter des <link> / <script> spécifiques à une page enfant #}
+  {% block head_extra %}{% endblock %}
+</head>
+<body>
+  <header>
+    <nav>
+      {# Lien vers l'accueil ; 'home' est le name défini dans mysite/urls.py #}
+      <a href="{% url 'home' %}"><strong>MonSite</strong></a>
+
+      {# Si l'utilisateur est connecté, on affiche actions de compte #}
+      {% if user.is_authenticated %}
+
+        {# Vue Django intégrée : password_change -> nécessite d'être auth #}
+        <a href="{% url 'password_change' %}">Changer mon mot de passe</a>
+
+        {# IMPORTANT (Django 5) : logout doit être fait en POST (GET renvoie 405) #}
+        <form method="post" action="{% url 'logout' %}" style="display:inline">
+          {% csrf_token %} {# Protection CSRF obligatoire pour POST #}
+          {# Bouton stylé "comme un lien" pour rester discret dans la nav #}
+          <button type="submit"
+                  style="background:none;border:none;padding:0;margin-left:12px;cursor:pointer;text-decoration:underline">
+            Se déconnecter
+          </button>
+        </form>
+
+      {% else %}
+        {# Vues Django intégrées : login/password_reset etc. #}
+        <a href="{% url 'login' %}">Se connecter</a>
+
+        {# Note: on utilise 'accounts:signup' car accounts/urls.py a app_name="accounts" #}
+        <a href="{% url 'accounts:signup' %}">Créer un compte</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main>
+    {# Zone que les templates enfants remplissent (home.html, login.html, etc.) #}
+    {% block content %}{% endblock %}
+  </main>
+
+  {# Astuce: tu peux afficher les messages flash ici (django.contrib.messages) plus tard #}
+</body>
+</html>
